@@ -7,21 +7,22 @@ jobs:
     runs-on: ubuntu-latest
     container: trustworthysystems/camkes
     steps:
-      - run:
-      - run: mkdir -p ~/.ssh
-      - run: touch ~/.ssh/config
-      - run: chmod 700 ~/.ssh/config
-      - run: echo -e "Host gitlab.adventium.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-      - run: apt-get install p7zip-full
-      - run: mkdir -p ~/CASE/camkes
-      - run: cd ~/CASE/camkes
-      - run: repo init -u https://github.com/seL4/camkes-manifest.git
-      - run: repo sync
-      - run: git clone --recur  https://github.com/sireum/hamr-codegen.git
-      - run: export HamrTestModes=phantom,compile,generated_unit_tests,smt2
-      - run: echo "HamrTestModes=${HamrTestModes}"
-      - run: export SMT2_TIMEOUT=180000
-      - run: echo "SMT2_TIMEOUT=${SMT2_TIMEOUT}"
-      - run: export ALSO_TRANSPILE_VIA_CALLBACKS=true
-      - run: echo "ALSO_TRANSPILE_VIA_CALLBACKS=${ALSO_TRANSPILE_VIA_CALLBACKS}"
-      - run: hamr-codegen/bin/build.cmd test
+      - name: In docker
+        run: |
+          mkdir -p ~/.ssh
+          touch ~/.ssh/config
+          chmod 700 ~/.ssh/config
+          echo -e "Host gitlab.adventium.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+          apt-get install p7zip-full
+          mkdir -p ~/CASE/camkes
+          cd ~/CASE/camkes
+          repo init -u https://github.com/seL4/camkes-manifest.git
+          repo sync
+          git clone --recur  https://github.com/sireum/hamr-codegen.git
+          export HamrTestModes=phantom,compile,generated_unit_tests,smt2
+          echo "HamrTestModes=${HamrTestModes}"
+          export SMT2_TIMEOUT=180000
+          echo "SMT2_TIMEOUT=${SMT2_TIMEOUT}"
+          export ALSO_TRANSPILE_VIA_CALLBACKS=true
+          echo "ALSO_TRANSPILE_VIA_CALLBACKS=${ALSO_TRANSPILE_VIA_CALLBACKS}"
+          hamr-codegen/bin/build.cmd test
