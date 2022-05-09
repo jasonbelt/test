@@ -9,25 +9,35 @@ jobs:
     steps:
       - name: Run in container
         run: |
-          mkdir -p ~/.ssh
-          touch ~/.ssh/config
-          chmod 700 ~/.ssh/config
-          echo -e "Host gitlab.adventium.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+          mkdir -p $HOME/.ssh
+          touch $HOME/.ssh/config
+          chmod 700 $HOME/.ssh/config
+          echo -e "Host gitlab.adventium.com\n\tStrictHostKeyChecking no\n" >> $HOME/.ssh/config
 
           apt-get update
           apt-get install  -f -y --no-install-recommends p7zip-full
           
-          mkdir -p ~/CASE/camkes
-          cd ~/CASE/camkes
+          mkdir -p $HOME/CASE/camkes
+          cd $HOME/CASE/camkes
           repo init -u https://github.com/seL4/camkes-manifest.git
           repo sync
 
+          mkdir -p $HOME/CASE/camkes-vm-examples
+          cd $HOME/CASE/camkes-vm-examples
+          repo init -u https://github.com/seL4/camkes-vm-examples-manifest.git
+          repo sync
+          
+          cd $HOME
           git clone --recur  https://github.com/sireum/hamr-codegen.git
           
-          export HamrTestModes=phantom,compile,generated_unit_tests,smt2
+          # see https://github.com/sireum/hamr-codegen-test/blob/master/scala/org/sireum/hamr/codegen/test/util/TestMode.scala
+          export HamrTestModes=phantom,compile,camkes,generated_unit_tests,smt2
           echo "HamrTestModes=${HamrTestModes}"
+          
           export SMT2_TIMEOUT=180000
           echo "SMT2_TIMEOUT=${SMT2_TIMEOUT}"
+          
           export ALSO_TRANSPILE_VIA_CALLBACKS=true
           echo "ALSO_TRANSPILE_VIA_CALLBACKS=${ALSO_TRANSPILE_VIA_CALLBACKS}"
-          hamr-codegen/bin/build.cmd test
+          
+          $HOME/hamr-codegen/bin/build.cmd test
