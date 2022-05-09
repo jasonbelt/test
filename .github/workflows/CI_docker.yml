@@ -8,6 +8,9 @@ jobs:
     container: trustworthysystems/camkes
     steps:
       - run: |
+          mkdir -p ~/.ssh
+          touch ~/.ssh/config
+          chmod 700 ~/.ssh/config
           echo -e "Host gitlab.adventium.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
           
           apt-get install p7zip-full
