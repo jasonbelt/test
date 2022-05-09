@@ -1,3 +1,7 @@
+name: docker
+
+on: push
+
 jobs:
   container:
     runs-on: ubuntu-latest
