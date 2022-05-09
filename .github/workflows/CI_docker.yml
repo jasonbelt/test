@@ -1,0 +1,26 @@
+jobs:
+  container:
+    runs-on: ubuntu-latest
+    container: trustworthysystems/camkes
+    steps:
+      - run: |
+          echo -e "Host gitlab.adventium.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+          
+          apt-get install p7zip-full
+          
+          mkdir -p ~/CASE/camkes
+          cd ~/CASE/camkes
+          repo init -u https://github.com/seL4/camkes-manifest.git
+          repo sync
+
+          git clone --recur  https://github.com/sireum/hamr-codegen.git
+          
+          export HamrTestModes=phantom,compile,generated_unit_tests,smt2
+          echo "HamrTestModes=${HamrTestModes}"
+          export SMT2_TIMEOUT=180000
+          echo "SMT2_TIMEOUT=${SMT2_TIMEOUT}"
+          export ALSO_TRANSPILE_VIA_CALLBACKS=true
+          echo "ALSO_TRANSPILE_VIA_CALLBACKS=${ALSO_TRANSPILE_VIA_CALLBACKS}"
+          hamr-codegen/bin/build.cmd test
+
+        name: Run in container
