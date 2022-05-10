@@ -11,7 +11,7 @@ jobs:
         run: |
           : "${GIT_USER:=Snail}"
           : "${GIT_EMAIL:=<>}"
-          : "${BASE_DIR:=$HOME/CASE}"
+          : "${CASE_DIR:=$HOME/CASE}"
 
           git config --global user.name $GIT_USER
           git config --global user.email $GIT_EMAIL
@@ -25,16 +25,22 @@ jobs:
           apt-get update
           apt-get install  -f -y --no-install-recommends p7zip-full
           
-          mkdir -p $HOME/CASE/camkes
-          cd $HOME/CASE/camkes
+          mkdir -p $CASE_DIR/camkes
+          cd $CASE_DIR/camkes
           repo init -u https://github.com/seL4/camkes-manifest.git
           repo sync
+
           pwd
+          
+          ls -alig
+          cd projects
+          ls -alig
+          cd ../tools
           ls -alig
           du -a
           
-          mkdir -p $HOME/CASE/camkes-vm-examples
-          cd $HOME/CASE/camkes-vm-examples
+          mkdir -p $CASE_DIR/camkes-vm-examples
+          cd $CASE_DIR/camkes-vm-examples
           repo init -u https://github.com/seL4/camkes-vm-examples-manifest.git
           repo sync
           
