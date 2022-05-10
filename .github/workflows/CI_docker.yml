@@ -37,7 +37,7 @@ jobs:
           repo init -u https://github.com/seL4/camkes-vm-examples-manifest.git
           repo sync
 
-          mdkir $HOME/.stack
+          mkdir $HOME/.stack
           
           cd $HOME
           whoami
