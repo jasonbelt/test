@@ -67,7 +67,7 @@ jobs:
           ls -laF
           
           cd $HOME
-          git clone --recur  https://github.com/sireum/hamr-codegen.git
+          git clone --recursive  https://github.com/sireum/hamr-codegen.git
           
           # see https://github.com/sireum/hamr-codegen-test/blob/master/scala/org/sireum/hamr/codegen/test/util/TestMode.scala
           export HamrTestModes=phantom,compile,camkes,generated_unit_tests,smt2
