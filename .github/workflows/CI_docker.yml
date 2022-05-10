@@ -9,6 +9,14 @@ jobs:
     steps:
       - name: Run in container
         run: |
+          : "${GIT_USER:=Snail}"
+          : "${GIT_EMAIL:=<>}"
+          : "${BASE_DIR:=$HOME/CASE}"
+
+          git config --global user.name $GIT_USER
+          git config --global user.email $GIT_EMAIL
+          git config --global color.ui true
+         
           mkdir -p $HOME/.ssh
           touch $HOME/.ssh/config
           chmod 700 $HOME/.ssh/config
