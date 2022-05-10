@@ -17,30 +17,30 @@ jobs:
           git config --global user.email $GIT_EMAIL
           git config --global color.ui true
 
-           aptInstall="apt-get install -f -y --no-install-recommends"
-           export DEBIAN_FRONTEND=noninteractive'
-           apt-get update
+          export aptInstall="apt-get install -f -y --no-install-recommends"
+          export DEBIAN_FRONTEND=noninteractive'
+          apt-get update
 
-           # Configure locale
-           ${aptInstall} locales
-           locale-gen en_US.UTF-8
-           export LANG=en_US.UTF-8
-           export LANGUAGE=en_US:en
-           export LC_ALL=en_US.UTF-8
-           env | grep LANG
-           locale
+          # Configure locale
+          ${aptInstall} locales
+          locale-gen en_US.UTF-8
+          export LANG=en_US.UTF-8
+          export LANGUAGE=en_US:en
+          export LC_ALL=en_US.UTF-8
+          env | grep LANG
+          locale
 
-           # Update CA Certificates 
-           ${aptInstall} ca-certificates
-           update-ca-certificates
+          # Update CA Certificates 
+          ${aptInstall} ca-certificates
+          update-ca-certificates
 
-            # Prerequisites
-            ${aptInstall} curl
-            ${aptInstall} signify-openbsd
-            ${aptInstall} git
-            ${aptInstall} ssh-client
-            ${aptInstall} p7zip-full
-
+          # Prerequisites
+          ${aptInstall} curl
+          ${aptInstall} signify-openbsd
+          ${aptInstall} git
+          ${aptInstall} ssh-client
+          ${aptInstall} p7zip-full
+          
           mkdir -p $HOME/.ssh
           touch $HOME/.ssh/config
           chmod 700 $HOME/.ssh/config
