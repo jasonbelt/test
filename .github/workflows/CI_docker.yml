@@ -5,7 +5,7 @@ on: push
 jobs:
   container:
     runs-on: ubuntu-latest
-    container: trustworthysystems/camkes-cakeml
+    container: trustworthysystems/camkes
     steps:
       - name: Run in container
         run: |
@@ -20,26 +20,8 @@ jobs:
           export aptInstall="apt-get install -f -y --no-install-recommends"
           export DEBIAN_FRONTEND=noninteractive
           apt-get update
-
-          # Configure locale
-          ${aptInstall} locales
-          locale-gen en_US.UTF-8
-          export LANG=en_US.UTF-8
-          export LANGUAGE=en_US:en
-          export LC_ALL=en_US.UTF-8
-          env | grep LANG
-          locale
-
-          # Update CA Certificates 
-          ${aptInstall} ca-certificates
-          update-ca-certificates
-
-          # Prerequisites
-          ${aptInstall} curl
-          ${aptInstall} signify-openbsd
-          ${aptInstall} git
-          ${aptInstall} ssh-client
           ${aptInstall} p7zip-full
+          ${aptInstall} emacs
           
           mkdir -p $HOME/.ssh
           touch $HOME/.ssh/config
