@@ -24,23 +24,16 @@ jobs:
 
           apt-get update
           apt-get install  -f -y --no-install-recommends p7zip-full
-          
-          mkdir -p $CASE_DIR/camkes
-          cd $CASE_DIR/camkes
+
+          export CAMKES_DIR=$CASE_DIR/camkes
+          mkdir -p $CAMKES_DIR
+          cd $CAMKES_DIR
           repo init -u https://github.com/seL4/camkes-manifest.git
           repo sync
 
-          pwd
-          
-          ls -alig
-          cd projects
-          ls -alig
-          cd ../tools
-          ls -alig
-          du -a
-          
-          mkdir -p $CASE_DIR/camkes-vm-examples
-          cd $CASE_DIR/camkes-vm-examples
+          export CAMKES_VM_EXAMPLES_DIR=$CASE_DIR/camkes-vm-examples
+          mkdir -p $CAMKES_VM_EXAMPLES_DIR
+          cd $CAMKES_VM_EXAMPLES_DIR
           repo init -u https://github.com/seL4/camkes-vm-examples-manifest.git
           repo sync
           
@@ -57,4 +50,4 @@ jobs:
           export ALSO_TRANSPILE_VIA_CALLBACKS=true
           echo "ALSO_TRANSPILE_VIA_CALLBACKS=${ALSO_TRANSPILE_VIA_CALLBACKS}"
           
-          $HOME/hamr-codegen/bin/build.cmd test
+          HAMR_TEST_PACKAGE_NAMES=org.sireum.hamr.codegen.test.normal.CodegenTest_CASE $HOME/hamr-codegen/bin/build.cmd test
