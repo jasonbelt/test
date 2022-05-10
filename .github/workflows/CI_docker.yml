@@ -21,6 +21,8 @@ jobs:
           cd $HOME/CASE/camkes
           repo init -u https://github.com/seL4/camkes-manifest.git
           repo sync
+          pwd
+          ls -alig
           du -a
           
           mkdir -p $HOME/CASE/camkes-vm-examples
