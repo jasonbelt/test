@@ -36,6 +36,12 @@ jobs:
           cd $CAMKES_VM_EXAMPLES_DIR
           repo init -u https://github.com/seL4/camkes-vm-examples-manifest.git
           repo sync
+
+          mdkir $HOME/.stack
+          
+          cd $HOME
+          whoami
+          ls -laF
           
           cd $HOME
           git clone --recur  https://github.com/sireum/hamr-codegen.git
