@@ -18,7 +18,7 @@ jobs:
           git config --global color.ui true
 
           export aptInstall="apt-get install -f -y --no-install-recommends"
-          export DEBIAN_FRONTEND=noninteractive'
+          export DEBIAN_FRONTEND=noninteractive
           apt-get update
 
           # Configure locale
