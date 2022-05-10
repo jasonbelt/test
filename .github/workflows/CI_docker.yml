@@ -9,20 +9,23 @@ jobs:
     steps:
       - name: Run in container
         run: |
-          : "${GIT_USER:=Snail}"
-          : "${GIT_EMAIL:=<>}"
-          : "${CASE_DIR:=$HOME/CASE}"
+          export GIT_USER=Snail
+          export GIT_EMAIL=snail@snail.com
 
           git config --global user.name $GIT_USER
           git config --global user.email $GIT_EMAIL
           git config --global color.ui true
 
+          export HOME=/root
+          
+          export CASE_DIR=$HOME/CASE
+          
           export aptInstall="apt-get install -f -y --no-install-recommends"
           export DEBIAN_FRONTEND=noninteractive
           apt-get update
           ${aptInstall} p7zip-full
           ${aptInstall} emacs
-          
+
           mkdir -p $HOME/.ssh
           touch $HOME/.ssh/config
           chmod 700 $HOME/.ssh/config
@@ -45,8 +48,8 @@ jobs:
           # which causes camkes builds to fail as the 'stack' Haskell too 
           # can't create '$HOME/.stack' directory.  Don't know why we can 
           # create directories here but 'stack' can't
-          chown root:root $HOME
-          ls -laF
+          #chown root:root $HOME
+          #ls -laF
           
           cd $HOME
           git clone --recursive  https://github.com/sireum/hamr-codegen.git
