@@ -5,7 +5,7 @@ on: push
 jobs:
   container:
     runs-on: ubuntu-latest
-    container: trustworthysystems/camkes
+    container: trustworthysystems/camkes-cakeml
     steps:
       - name: Run in container
         run: |
@@ -38,12 +38,10 @@ jobs:
           repo sync
 
 
-          mkdir $HOME/.stack
-          
-          cd $HOME
-          whoami
-          ls -laF
-
+          # $HOME dir in the container is not owned by root for some reason
+          # which causes camkes builds to fail as the 'stack' Haskell too 
+          # can't create '$HOME/.stack' directory.  Don't know why we can 
+          # create directories here but 'stack' can't
           chown root:root $HOME
           ls -laF
           
